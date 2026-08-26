@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export const H1_STORAGE_KEY = "cyberkid:h1-footprint:v1";
 export const IDENTITY_STORAGE_KEY = "cyberkid:identity:v1";
+export const H1_CONSEQUENCE_STORAGE_KEY = "cyberkid:h1-consequences:v1";
 
 export type H1Footprint = {
   birthMonth?: string;
@@ -21,7 +22,9 @@ function readStorage<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
     const value = window.localStorage.getItem(key);
-    return value ? { ...fallback, ...JSON.parse(value) } : fallback;
+    if (!value) return fallback;
+    const parsed = JSON.parse(value) as T;
+    return Array.isArray(fallback) ? parsed : { ...fallback, ...parsed };
   } catch {
     return fallback;
   }
@@ -30,11 +33,13 @@ function readStorage<T>(key: string, fallback: T): T {
 export function useJourneyOneState() {
   const [footprint, setFootprint] = useState<H1Footprint>({});
   const [identity, setIdentity] = useState<SimulatedIdentity>(defaultIdentity);
+  const [shownConsequences, setShownConsequences] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     setFootprint(readStorage(H1_STORAGE_KEY, {}));
     setIdentity(readStorage(IDENTITY_STORAGE_KEY, defaultIdentity));
+    setShownConsequences(readStorage(H1_CONSEQUENCE_STORAGE_KEY, []));
     setHydrated(true);
   }, []);
 
@@ -46,9 +51,17 @@ export function useJourneyOneState() {
     if (hydrated) window.localStorage.setItem(IDENTITY_STORAGE_KEY, JSON.stringify(identity));
   }, [identity, hydrated]);
 
+  useEffect(() => {
+    if (hydrated) window.localStorage.setItem(H1_CONSEQUENCE_STORAGE_KEY, JSON.stringify(shownConsequences));
+  }, [shownConsequences, hydrated]);
+
   const recordFootprint = (field: keyof H1Footprint, value: string | null) => {
     setFootprint((current) => ({ ...current, [field]: value }));
   };
 
-  return { footprint, identity, setIdentity, recordFootprint };
+  const markConsequenceShown = (key: string) => {
+    setShownConsequences((current) => current.includes(key) ? current : [...current, key]);
+  };
+
+  return { footprint, identity, setIdentity, recordFootprint, shownConsequences, markConsequenceShown };
 }
