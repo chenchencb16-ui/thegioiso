@@ -11,7 +11,7 @@ export type SimulatedIdentity = { nickname: string; avatar: number };
 export type H1InvestigatorState = { opened: boolean; evidence: string[]; assembled: boolean; reflectionCompleted: boolean; reflectionSelections: string[] };
 export type H1ChatState = { escalationByFingerprint: Record<string, number>; respondedFingerprints: string[] };
 
-const defaultIdentity: SimulatedIdentity = { nickname: "Mây Pixel", avatar: 0 };
+const defaultIdentity: SimulatedIdentity = { nickname: "", avatar: 0 };
 const defaultInvestigator: H1InvestigatorState = { opened: false, evidence: [], assembled: false, reflectionCompleted: false, reflectionSelections: [] };
 export const defaultChatState: H1ChatState = { escalationByFingerprint: {}, respondedFingerprints: [] };
 const footprintFields: (keyof H1Footprint)[] = ["birthMonth", "birthYear", "school", "routine"];

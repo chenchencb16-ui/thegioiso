@@ -1,8 +1,10 @@
+import { AvatarImage } from "./avatar-image";
+
 export type WorldView = "world" | "social" | "shorts" | "chat" | "game" | "browser" | "mail" | "profile";
 
 type WorldMapProps = {
   nickname: string;
-  avatar: string;
+  avatar: number;
   open: (view: WorldView) => void;
 };
 
@@ -15,17 +17,9 @@ const islands: { id: Exclude<WorldView, "world" | "profile">; label: string; sub
   { id: "browser", label: "Web Gate", subtitle: "Khám phá Web", asset: "/assets/world/web-gate.png", position: "south-east" },
 ];
 
-export function WorldMap({ nickname, avatar, open }: WorldMapProps) {
+export function WorldMap({ avatar, open }: WorldMapProps) {
   return (
     <section className="island-world">
-      <div className="island-world-intro">
-        <div>
-          <p className="eyebrow">THẾ GIỚI SỐ • ONLINE</p>
-          <h1>Chào, <span>{nickname}!</span></h1>
-          <p>Hôm nay bạn muốn khám phá đâu trong thế giới số?</p>
-        </div>
-      </div>
-
       <div className="island-map" aria-label="Bản đồ các khu vực trong thế giới số">
         <span className="map-cloud cloud-one" aria-hidden="true" />
         <span className="map-cloud cloud-two" aria-hidden="true" />
@@ -57,9 +51,8 @@ export function WorldMap({ nickname, avatar, open }: WorldMapProps) {
         ))}
 
         <button className="profile-hub" onClick={() => open("profile")} aria-label="Mở Hồ sơ">
-          <span className="profile-hub-orbit" aria-hidden="true"><i>{avatar}</i></span>
+          <span className="profile-hub-orbit" aria-hidden="true"><AvatarImage index={avatar} /></span>
           <strong>Hồ sơ</strong>
-          <small>Danh tính của bạn trong thế giới số</small>
         </button>
       </div>
     </section>
