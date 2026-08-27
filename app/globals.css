@@ -196,3 +196,19 @@ button{font-weight:500}.opening{background:#f4f7fb}.opening-grid{opacity:.55;bac
 /* Bottom orbit safe area: keep Mail Station's complete nameplate inside the map. */
 @media(max-width:1050px) and (min-width:801px){.island-south-west{bottom:14px}}
 @media(min-width:1051px) and (max-height:800px){.island-south-west{bottom:14px}}
+
+/* Shared product logo: preserve the supplied artwork at distinct opening/header scales. */
+.logo-mark img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;transform:scale(1.65)}
+.opening .big-logo{width:96px;height:82px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.opening .big-logo .logo-mark{width:96px;height:82px;transform:none}
+.brand{gap:7px}.brand .logo-mark{width:42px;height:38px;transform:none}
+@media(max-width:800px){.opening .big-logo,.opening .big-logo .logo-mark{width:86px;height:74px}.brand .logo-mark{width:38px;height:34px;transform:none}}
+@media(max-width:520px){.opening .big-logo,.opening .big-logo .logo-mark{width:78px;height:68px}.brand .logo-mark{width:36px;height:32px}}
+
+/* Opening product name: one restrained, cohesive two-line wordmark. */
+.opening .big-logo{margin-bottom:29px}
+.opening h1{font-size:clamp(2.9rem,5.8vw,5.1rem);line-height:.94;gap:10px}
+.opening h1 span{color:#3278d0;font-size:.94em;font-weight:730;letter-spacing:.025em}
+.opening h1 strong{color:#183554;background:none;-webkit-text-fill-color:#183554;font-weight:780;letter-spacing:-.025em}
+@media(max-width:800px){.opening .big-logo{margin-bottom:25px}.opening h1{font-size:clamp(2.6rem,8.7vw,4rem);gap:10px}}
+@media(max-width:520px){.opening .big-logo{margin-bottom:22px}.opening h1{font-size:clamp(2.2rem,11vw,2.9rem);gap:9px}.opening h1 strong{white-space:nowrap}}
